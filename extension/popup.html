@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ApplyTrack</title>
+    <style>
+      :root { color-scheme: light; }
+      * { box-sizing: border-box; }
+      body {
+        width: 360px; margin: 0; font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+        background: #f4f6fb; color: #0f172a;
+      }
+      header {
+        display: flex; align-items: center; gap: 10px; padding: 16px;
+        background: linear-gradient(135deg, #0b1220 0%, #3730a3 70%, #7c3aed 100%);
+        color: #fff;
+      }
+      .logo {
+        width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center;
+        background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.25);
+        color: #fff; font-size: 12px; font-weight: 700;
+      }
+      header h1 { font-size: 15px; margin: 0; letter-spacing: -.01em; }
+      header p { font-size: 11px; margin: 1px 0 0; color: #c7d2fe; }
+      .body { padding: 14px 16px 16px; }
+      button {
+        width: 100%; border: 0; border-radius: 12px; padding: 10px 12px; font-size: 13px;
+        font-weight: 600; cursor: pointer; background: #4f46e5; color: #fff;
+        box-shadow: 0 4px 14px -6px rgba(79,70,229,.55); transition: filter .15s;
+      }
+      button:hover { filter: brightness(1.07); }
+      button.secondary { background: #fff; color: #334155; border: 1px solid #e2e8f0; box-shadow: none; }
+      button.platform { background: #fff; color: #1e293b; border: 1px solid #e2e8f0; box-shadow: none; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+      button.platform span.tag { font-size: 10px; font-weight: 700; color: #4f46e5; background: #eef2ff; border-radius: 999px; padding: 2px 8px; }
+      button.dark { background: #0b1220; box-shadow: none; }
+      button:disabled { opacity: .6; cursor: default; }
+      .row { display: flex; gap: 8px; margin-bottom: 10px; }
+      .status { font-size: 12px; line-height: 1.5; min-height: 18px; margin: 2px 0 10px; border-radius: 10px; padding: 0; }
+      .status.ok { color: #047857; }
+      .status.err { color: #be123c; }
+      h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #94a3b8; margin: 14px 0 6px; }
+      ul { list-style: none; margin: 0; padding: 0; max-height: 220px; overflow-y: auto; }
+      li { background: #fff; border: 1px solid #e5e9f0; border-radius: 12px; padding: 9px 11px; margin-bottom: 6px; font-size: 12px; }
+      li small { display: block; color: #94a3b8; font-size: 10px; margin-top: 2px; }
+      .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; }
+      .ok .dot { background: #10b981; } .err .dot { background: #f43f5e; } .dup .dot { background: #f59e0b; }
+      .auth {
+        background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+        padding: 11px; margin-bottom: 10px; font-size: 12px;
+      }
+      .auth-title { font-weight: 700; margin-bottom: 8px; }
+      .auth input {
+        width: 100%; border: 1px solid #e2e8f0; border-radius: 9px; padding: 8px 10px;
+        font-size: 12px; margin-bottom: 8px; font-family: inherit;
+      }
+      .auth input:focus { outline: 2px solid #c7d2fe; border-color: #818cf8; }
+      .auth-row { display: flex; align-items: center; gap: 8px; }
+      .auth-email { flex: 1; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .auth-btn {
+        width: auto; padding: 3px 10px; font-size: 11px; background: #fff; color: #4f46e5;
+        border: 1px solid #c7d2fe; box-shadow: none;
+      }
+      .auth-hint { color: #94a3b8; font-size: 11px; margin: 8px 0 0; }
+      .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #94a3b8; margin: 12px 0 6px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span class="logo">AT</span>
+      <div>
+        <h1>ApplyTrack</h1>
+        <p>Job applications, in one place.</p>
+      </div>
+    </header>
+    <div class="body">
+      <div class="auth" id="authBox">
+        <div id="authLoggedOut">
+          <div class="auth-title">Log in to sync &amp; capture</div>
+          <input id="authEmail" type="email" placeholder="Email" autocomplete="email" />
+          <input id="authPassword" type="password" placeholder="Password" autocomplete="current-password" />
+          <button id="authLogin">Log in</button>
+          <p class="auth-hint">Same email + password as the dashboard. No account yet? Register on the dashboard first.</p>
+        </div>
+        <div id="authLoggedIn" hidden>
+          <div class="auth-row">
+            <span class="auth-email" id="authEmailText"></span>
+            <button id="authLogout" class="auth-btn">Log out</button>
+          </div>
+        </div>
+      </div>
+      <div class="status" id="status"></div>
+
+      <div class="row">
+        <button id="syncGlints">Sync Glints applications</button>
+      </div>
+      <p class="section-label">Capture</p>
+      <div class="row">
+        <button id="capture" class="dark">Capture this job</button>
+      </div>
+      <div class="row">
+        <button id="open" class="secondary">Open dashboard</button>
+        <button id="options" class="secondary">Settings</button>
+      </div>
+
+      <h2>Recent activity</h2>
+      <ul id="activity"></ul>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
