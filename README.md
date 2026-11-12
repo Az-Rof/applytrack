@@ -4,6 +4,28 @@ Automated job application tracking & analytics — Next.js + Prisma + PostgreSQL
 
 Implements the full PRD (V1 + V2 + V3).
 
+## Screenshots
+
+**Dashboard** — key stats, monthly applications, platform performance, and recent applications at a glance.
+
+![Dashboard](screenshoots/dashboard.png)
+
+**Applications** — every application with its current status and job-posting signals (Closed, Job Removed, Verified scam).
+
+![Applications](screenshoots/applications.png)
+
+**Analytics** — conversion funnel, status distribution, monthly trend, and interview rate per platform.
+
+![Analytics](screenshoots/analytics.png)
+
+**Insights** — generated report with insights and recommendations pulled from your own application data.
+
+![Insights](screenshoots/insights.png)
+
+**Chrome extension** — one-click Glints sync, job capture, and recent activity.
+
+<img src="screenshoots/extension.png" alt="Chrome extension popup" width="360">
+
 ## Features
 
 | PRD | Feature | Where |
